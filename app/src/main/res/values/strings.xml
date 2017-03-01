@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">User Controll</string>
+    <string name="Login">login</string>
+    <string name="Senha">Senha</string>
+    <string name="Nome">Nome</string>
+    <string name="Salvar">salvar</string>
+    <string name="CampoObrigatorio">Campo obrigatório</string>
 </resources>
