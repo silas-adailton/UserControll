@@ -18,4 +18,9 @@ public class FirebaseModule {
     Repository providerGetRepository(DatabaseReference databaseReference) {
         return new Firebase(databaseReference);
     }
+
+    @Provides
+    Repositorio providerGetRepositorio(DatabaseReference databaseReference) {
+        return new UserRepositorio(databaseReference);
+    }
 }

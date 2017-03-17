@@ -6,7 +6,7 @@ import java.util.List;
 public interface Repository<T> {
     void save(T t, RepositoryExecutor repositoryExecutor);
 
-    void toList(RepositoryExecutor repositoryExecutor);
+    // void toList(RepositoryExecutor repositoryExecutor);
 
     List<T> findAllByNome(T t);
 

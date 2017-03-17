@@ -1,35 +1,24 @@
 package br.com.silas.usercontroll.data;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import br.com.silas.usercontroll.Usuario;
 
 public class Firebase implements Repository<Usuario> {
-    List<Usuario> listUsers = new ArrayList<>();
     private DatabaseReference mDatabaseReference;
 
     @Inject
     public Firebase(DatabaseReference databaseReference) {
         this.mDatabaseReference = databaseReference;
-    }
-
-    public Firebase() {
     }
 
     @Override
@@ -49,8 +38,9 @@ public class Firebase implements Repository<Usuario> {
         });
     }
 
-    @Override
+   /* @Override
     public void toList(final RepositoryExecutor repositoryExecutor) {
+       final List<Object> listUsers = new ArrayList<>();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -60,24 +50,23 @@ public class Firebase implements Repository<Usuario> {
                 };
                 Map<String, Usuario> lista = dataSnapshot.getValue(map);
 
-                for (String key : lista.keySet()) {
+                for (Object key : lista.keySet()) {
                     listUsers.add(lista.get(key));
-                    Log.d("onDataChange: ", lista.get(key).toString());
 
                 }
-
-                // Log.d("onDataChange: ",listUsers.toString());
-                repositoryExecutor.onList(listUsers);
+                Log.d("onDataChange: ", listUsers.toString());
+                repositoryExecutor.onSuccess(listUsers);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                repositoryExecutor.onError(databaseError.toException());
                 Log.w("onCancelled: ", databaseError.getMessage());
 
             }
         });
 
-    }
+    }*/
 
     /*@Override
     public List<Usuario> toList() {

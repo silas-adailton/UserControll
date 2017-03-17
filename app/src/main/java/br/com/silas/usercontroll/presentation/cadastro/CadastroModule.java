@@ -1,4 +1,4 @@
-package br.com.silas.usercontroll.presentation;
+package br.com.silas.usercontroll.presentation.cadastro;
 
 import dagger.Module;
 import dagger.Provides;

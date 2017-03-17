@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.silas.usercontroll.R;
+import br.com.silas.usercontroll.presentation.cadastro.CadastroActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -1,8 +1,9 @@
-package br.com.silas.usercontroll.presentation;
+package br.com.silas.usercontroll.presentation.cadastro;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +15,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.silas.usercontroll.ItemAdapter;
 import br.com.silas.usercontroll.MainApplication;
 import br.com.silas.usercontroll.R;
 import br.com.silas.usercontroll.Usuario;
@@ -33,21 +33,20 @@ public class CadastroActivity extends AppCompatActivity implements Contract.View
     ProgressBar progressCadastro;
     @BindView(R.id.recycler_cadastro)
     RecyclerView recyclerViewCadastro;
-
-    ItemAdapter adapter;
-
     @Inject
     Presenter mPresenter;
     Contract.Presenter mContraPresenter;
+    private CadastroRowAdapter adapter;
+    private DividerItemDecoration divider;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         ButterKnife.bind(this);
-        progressCadastro.setVisibility(View.GONE);
-
         initDagger();
+        initialize();
     }
 
     void initDagger() {
@@ -59,42 +58,38 @@ public class CadastroActivity extends AppCompatActivity implements Contract.View
                 .inject(this);
     }
 
+    void initialize() {
+        //Initialize recyclerView
+        linearLayoutManager = new LinearLayoutManager(this);
+        divider = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
+        recyclerViewCadastro.addItemDecoration(divider);
+        recyclerViewCadastro.setLayoutManager(linearLayoutManager);
+        recyclerViewCadastro.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCadastro.setHasFixedSize(true);
+
+        //Initialize progressBar
+        progressCadastro.setVisibility(View.GONE);
+
+    }
+
     @OnClick(R.id.btnCadastroSalvar)
     void SalvarContato() {
-        Usuario usuario = new Usuario();
-        usuario.setmNome(editTextNome.getText().toString());
-        usuario.setmLogin(editTextLogin.getText().toString());
-        usuario.setmSenha(editTextSenha.getText().toString());
-
-        mContraPresenter.saveUser(usuario);
+        mContraPresenter.saveUser(editTextNome.getText().toString(),
+                editTextLogin.getText().toString(),
+                editTextSenha.getText().toString());
+        listarUsuario();
 
     }
 
     @OnClick(R.id.btn_listar)
     void listarUsuario() {
-
         mContraPresenter.ListUser();
-
     }
-
 
     @Override
     public void showListUser(List<Usuario> list) {
-
-        if (list.size() != 0) {
-            //progress.setVisibility(View.GONE);
-            recyclerViewCadastro.setLayoutManager(new LinearLayoutManager(this));
-            recyclerViewCadastro.setItemAnimator(new DefaultItemAnimator());
-            recyclerViewCadastro.setHasFixedSize(true);
-
-            adapter = new ItemAdapter(CadastroActivity.this, list);
-
-            recyclerViewCadastro.setAdapter(adapter);
-        } else {
-            Toast.makeText(this, "A lista ainda esta vazia", Toast.LENGTH_SHORT).show();
-        }
-
-
+        adapter = new CadastroRowAdapter(list);
+        recyclerViewCadastro.setAdapter(adapter);
     }
 
     @Override
@@ -102,19 +97,16 @@ public class CadastroActivity extends AppCompatActivity implements Contract.View
         editTextNome.setError(getString(R.string.CampoObrigatorio));
         editTextLogin.setError(getString(R.string.CampoObrigatorio));
         editTextSenha.setError(getString(R.string.CampoObrigatorio));
-
     }
 
     @Override
     public void showProgress() {
         progressCadastro.setVisibility(View.VISIBLE);
-
     }
 
     @Override
     public void hideProgress() {
         progressCadastro.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -124,7 +116,6 @@ public class CadastroActivity extends AppCompatActivity implements Contract.View
 
     @Override
     public void openCadastroActivity() {
-
     }
 
     @Override
@@ -136,4 +127,5 @@ public class CadastroActivity extends AppCompatActivity implements Contract.View
     public void showErrorCadastro(Throwable e) {
         Toast.makeText(this, "Erro ao realizar o cadastro " + e.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
 }

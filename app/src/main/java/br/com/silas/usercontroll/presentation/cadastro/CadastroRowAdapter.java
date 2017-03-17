@@ -1,6 +1,5 @@
-package br.com.silas.usercontroll;
+package br.com.silas.usercontroll.presentation.cadastro;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +8,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.silas.usercontroll.R;
+import br.com.silas.usercontroll.Usuario;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
-    private Context context;
+
+public class CadastroRowAdapter extends RecyclerView.Adapter<CadastroRowAdapter.MyViewHolder> {
     private List<Usuario> list;
 
-    public ItemAdapter(Context context, List<Usuario> list) {
-        this.context = context;
+    public CadastroRowAdapter(List<Usuario> list) {
         this.list = list;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_listview_layout, parent, false);
         //MyViewHolder holder = new MyViewHolder(view);
         return new MyViewHolder(view);

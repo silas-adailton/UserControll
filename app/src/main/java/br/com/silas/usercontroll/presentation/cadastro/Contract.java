@@ -1,4 +1,4 @@
-package br.com.silas.usercontroll.presentation;
+package br.com.silas.usercontroll.presentation.cadastro;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface Contract {
     }
 
     interface Presenter {
-        void saveUser(Usuario usuario);
+        void saveUser(String nome, String login, String password);
 
         void ListUser();
     }

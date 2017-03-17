@@ -6,7 +6,7 @@ public interface InteractorExecutor {
 
     void onSuccess(Object object);
 
-    void onList(List<Usuario> list);
+    void onSuccess(List<Object> list);
 
     void onError(Throwable e);
 

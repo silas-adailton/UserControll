@@ -6,4 +6,6 @@ import dagger.Component;
 public interface RepositoryComponent {
 
     Repository getRepository();
+
+    Repositorio getRepositorio();
 }
